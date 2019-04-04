@@ -27,6 +27,16 @@ componentDidMount() {
     }
 })}
 
+delete(id) {
+    //this is the delete method
+    firebase.firestore().collection('Book_Entries').doc(id).delete().then(() =>{
+    console.log("Book Deleted");
+    this.props.history.push('/')
+}).catch((error) => {
+    console.log("Error romoving book : ", error);
+})
+}
+
 render() {
     return(
         <div class="container">
@@ -50,8 +60,8 @@ render() {
                 <dt>Thoughts</dt>
                 <dd>{this.state.Book_Entries.Thoughts}</dd>
             </dl>
-            <Link to={`/edit/${this.state.key}`} class="btn btn-success">Edit</Link>
-            </div>
+            <Link to={`/edit/${this.state.key}`} class="btn btn-success">Edit</Link> &nbsp;
+            <button onClick={this.delete.bind(this, this.state.key)} class="btn btn-danger">Delete</button></div>
             </div>
         
         

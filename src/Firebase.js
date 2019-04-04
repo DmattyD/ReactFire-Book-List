@@ -2,6 +2,7 @@
 
 import * as firebase from 'firebase';
 import firestore from 'firebase/firestore';
+require ('firebase/firestore'); 
 
 const settings = {timestampsInSnapshots: true};
 

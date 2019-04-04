@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import firebase from '../Firebase';
 import { Link } from 'react-router-dom';
 import ReactDOM from 'react-dom';
+import App from '../App';
 
 class Edit extends Component  {
 
     constructor(props) {
         super(props);
+        this.ref= firebase.firestore().collection('Book_Entries');
         this.state = {
             key: '',
             Title: '',
@@ -19,7 +21,7 @@ class Edit extends Component  {
 
     componentDidMount() {
         const ref = firebase.firestore().collection('Book_Entries').doc(this.props.match.params.id);
-        ref.get().then((doc) => {
+        ref.get().then((doc) => { /// get by id
             if (doc.exists) {
                 const Book_Entries = doc.data();
                 this.setState({
@@ -36,7 +38,8 @@ class Edit extends Component  {
         });
     }
 
-onChange = (e) => {
+
+onUpdate = (e) => {
     const state = this.state
     state[e.target.name] = e.target.value;
     this.setState({Book_Entries:state});
@@ -49,14 +52,18 @@ onSubmit = (e) => {
 /// this is the edit function
     const updateRef = firebase.firestore().collection('Book_Entries').doc(this.state.key);
     updateRef.set({
+        Title,
+        Author,
+        Pages,
         Thoughts,
         Completed
     }).then((docRef) => {
         this.setState({
             key:'',
+           
             Thoughts:'',
             Completed: '',
-        })
+        }).then.onUpdate().onSubmit()
         this.props.history.push("/show/"+this.props.match.params.id)
     })
     .catch((error) => {
@@ -70,22 +77,34 @@ render() {
         <div class="panel panel-default">
         <div class="panel-heading">
         <h3 class="panel-title">
-        Thoughts & Completion
+        Update Thoughts
         </h3>
         </div>
         <div class="panel-body">
-        <h4><Link to={`/show/${this.state.key}`} class="btn btn-primary">Book List</Link></h4>
+        <h4><Link to='/' class="btn btn-primary">Book List</Link></h4>
         <form onSubmit={this.onSubmit}>
-        <label for="title">Title:{this.state.Title}</label>
-        <label for="Author">Author: {this.state.Author}</label>
-        <label for="Pages">Pages: {this.state.Pages}</label>
+        <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" class="form-control" name="Title" value={this.state.Title}  placeholder="Title" disabled/>
+        </div>
+        <div class="form-group">
+        <label for="author">Author:</label>
+        <input type="text" class="form-control" name="Author" value={this.state.Author} placeholder="Author" disabled />
+        </div>
+        <div class="form-group">
+        <label for="Pages">Pages:</label>
+        <input type="number" class="form-control" name="Pages" value={this.state.Pages} placeholder="Pages" disabled/>
+        </div>
+        <div class="form-group">
         <label for="Thoughts">Thoughts</label>
-        <textArea type="text" class="form-control" name="thoughts" value={this.state.Thoughts} onChange={this.onChange} placeholder="Thoughts"/>
+        <textArea type="text" class="form-control" name="Thoughts" value={this.state.Thoughts} onUpdate={this.onUpdate} placeholder="Thoughts" cols="8" rows="3">{this.state.Thoughts}</textArea>
+        </div>
+        <div class="form-group">
        <label for="Completed">Completed</label>
-       <input type="boolean" class="form-control" name="completed" value={this.state.Completed} onCanPlay={this.onChange} placeholder="Completed"/>
+       <input type="text" class="form-control" name="Completed" value={this.state.Completed} onUpdate={this.onUpdate} placeholder="Completed"/>
         <button type ="submit" class="btn btn-success">Submit</button>
         
-        
+        </div>
         
         
         

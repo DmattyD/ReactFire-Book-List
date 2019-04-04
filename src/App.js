@@ -7,7 +7,7 @@ import firebase from './Firebase';
 class App extends Component {
   constructor(props) {
     super(props) ;
-      this.ref = firebase.firestore().collection('Book Entries');
+      this.ref = firebase.firestore().collection('Book_Entries');
       this.unsubscribe = null;
       this.state = {
         Book_Entries: []
@@ -33,6 +33,7 @@ onCollectionUpdate = (querySnapshot) => {
     Book_Entries
   });
 }
+
 componentDidMount() {
   this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
 }

@@ -70,7 +70,7 @@ return (
     <label for="Pages">Pages:</label>
     <input type="number" class="form-control" name="Pages" value={Pages} onChange={this.onChange} placeholder="Pages"/>
     <label for="Completed">Completed:</label>
-    <input type="boolean" class="form-control" name="Completed" value={Completed} onChange={this.onChange} placeholder="Completed"/>
+    <input type="text" class="form-control" name="Completed" value={Completed} onChange={this.onChange} placeholder="Completed"/>
     <label for="Thoughts">Thoughts:</label>
     <textArea type="text" class="form-control" name="Thoughts" cols="8" row="3" onChange={this.onChange} placeholder="Thoughts">{Thoughts}</textArea>
     </div>
