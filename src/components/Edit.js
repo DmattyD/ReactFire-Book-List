@@ -46,6 +46,7 @@ onUpdate = (e) => {
 }
 
 onSubmit = (e) => {
+    debugger
     e.preventDefault();
 
     const { Title, Author, Pages, Thoughts, Completed } = this.state;
@@ -60,7 +61,6 @@ onSubmit = (e) => {
     }).then((docRef) => {
         this.setState({
             key:'',
-           
             Thoughts:'',
             Completed: '',
         }).then.onUpdate().onSubmit()
